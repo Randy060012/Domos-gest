@@ -53,6 +53,16 @@
                     </select>
                 </div>
 
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-bold text-slate-400 tracking-wider uppercase"><i class="fa-solid fa-tags text-gold-500/70 mr-1.5"></i> Budget max</label>
+                    <select id="filter-budget" onchange="applyFilters()" class="w-full bg-slate-50/60 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                        <option value="">Illimité</option>
+                        <option value="1500000">1 500 000 F CFA</option>
+                        <option value="3000000">3 000 000 F CFA</option>
+                        <option value="5000000">5 000 000 F CFA</option>
+                    </select>
+                </div>
+
                 <div class="flex items-end">
                     <button onclick="resetFilters()" class="w-full bg-slate-900 text-white hover:bg-gold-500 font-bold text-[11px] tracking-widest uppercase rounded-xl py-3.5 transition-all duration-300 shadow-sm">
                         Effacer les filtres
@@ -70,9 +80,11 @@
         <div id="container-detail-bien"></div>
     </div>
 </main>
-@endsection
+
+<script id="liste-biens-data" type="application/json">@json($biens)</script>
 <script src="client/liste.js"></script>
 <script>
 const baseUrlDetails = "{{ route('details.home') }}";
-
+const contactInteretUrl = "{{ route('contact.interet') }}";
 </script>
+@endsection

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 425.65 229.85">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #ead292;
+      }
+
+      .cls-3 {
+        font-family: Avenue-Regular, Avenue;
+        font-size: 25.36px;
+      }
+
+      .cls-4, .cls-5 {
+        fill: #012c4e;
+      }
+
+      .cls-6 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-7 {
+        letter-spacing: .01em;
+      }
+
+      .cls-8 {
+        letter-spacing: 0em;
+      }
+
+      .cls-9 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-5 {
+        font-family: AerospaceRegular, Aerospace;
+        font-size: 54.78px;
+      }
+    </style>
+  </defs>
+  <g id="Sigle">
+    <text class="cls-3" transform="translate(.13 223.51) scale(.94 1)"><tspan x="0" y="0">Ag</tspan><tspan class="cls-1" x="32.56" y="0">e</tspan><tspan x="45.19" y="0">nce immobili</tspan><tspan class="cls-7" x="196.14" y="0">è</tspan><tspan x="208.76" y="0">re de </tspan><tspan class="cls-9" x="272.55" y="0">T</tspan><tspan x="289.71" y="0">-</tspan><tspan class="cls-9" x="298.64" y="0">L</tspan><tspan class="cls-8" x="312.31" y="0">EX GLO</tspan><tspan class="cls-6" x="401.32" y="0">B</tspan><tspan class="cls-8" x="417.15" y="0">AL</tspan></text>
+    <text class="cls-5" transform="translate(176.74 193.59)"><tspan x="0" y="0">DOMOS</tspan></text>
+    <g>
+      <polygon class="cls-4" points="31.09 193.59 31.09 139.14 126.47 69.47 152.77 88.68 179.12 69.43 126.47 30.98 0 123.35 0 193.59 31.09 193.59"/>
+      <polygon class="cls-4" points="134.1 193.59 134.1 139.14 229.49 69.47 282.14 69.43 229.49 30.98 103.01 123.35 103.01 193.59 134.1 193.59"/>
+    </g>
+    <g>
+      <rect class="cls-2" x="231.23" y="82.99" width="22.54" height="21.93"/>
+      <rect class="cls-2" x="231.23" y="109.81" width="22.54" height="21.93"/>
+      <rect class="cls-2" x="258.65" y="82.99" width="21.33" height="21.93"/>
+      <rect class="cls-2" x="258.65" y="109.81" width="21.33" height="21.93"/>
+    </g>
+    <circle class="cls-2" cx="179.12" cy="17.08" r="17.08"/>
+  </g>
+</svg>

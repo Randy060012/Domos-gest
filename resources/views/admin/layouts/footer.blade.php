@@ -2,10 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 text-center">
-                ©
-                <script>
-                    document.write(new Date().getFullYear())
-                </script> by <span class="fw-semibold">ORION PRO</span>
+                &copy; 2026 <span class="fw-semibold">DOMOS</span>
             </div>
         </div>
     </div>

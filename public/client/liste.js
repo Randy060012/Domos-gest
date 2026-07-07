@@ -1,11 +1,4 @@
-const PROPERTIES = [
-    { id: 1, title: "Villa Lumina — Édifice Contemporain", price: 4950000, location: "Cannes", type: "Villa", status: "Vente", area: 420, rooms: 5, baths: 5, image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", desc: "Chef-d'œuvre contemporain idéalement positionné sur les hauteurs. Prestations domotiques de pointe, piscine à débordement de 20 mètres.", amenities: ["Piscine à débordement", "Système Domotique complet", "Garage 4 voitures", "Cave à vin régulée"] },
-    { id: 2, title: "Penthouse Impérial — Vue Panoramique", price: 3200000, location: "Paris", type: "Appartement", status: "Vente", area: 195, rooms: 3, baths: 3, image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80", desc: "Au dernier étage d'un immeuble haussmannien hautement sécurisé, ce penthouse offre des vues spectaculaires sans vis-à-vis.", amenities: ["Terrasse de plain-pied", "Ascenseur Privatif", "Gardiennage 24/7"] },
-    { id: 3, title: "Le Domaine de l'Olympe — Propriété d'Exception", price: 12500000, location: "Saint-Tropez", type: "Villa", status: "Vente", area: 680, rooms: 7, baths: 7, image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", desc: "Domaine clos d'un hectare niché dans le secteur le plus exclusif. Parc paysager d'arbres séculaires aux essences rares.", amenities: ["Accès Mer Privé", "Spa & Hammam", "Terrain de Tennis"] },
-    { id: 4, title: "Duplex Signature — Échappée Jardin Privé", price: 18500, location: "Paris", type: "Appartement", status: "Location", area: 240, rooms: 4, baths: 3, image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", desc: "Duplex de prestige entièrement meublé et décoré par un architecte d'intérieur de renom. Jardin d'hiver privatif.", amenities: ["Jardin Privatif", "Ameublement de créateur"] },
-    { id: 5, title: "Villa Turquoise — Écrin en Bord de Falaise", price: 25000, location: "Cannes", type: "Villa", status: "Location", area: 310, rooms: 4, baths: 4, image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80", desc: "Demeure suspendue offrant une vue plunging époustouflante. Accès direct aux criques en contrebas.", amenities: ["Vue Mer Totale", "Service de Conciergerie"] },
-    { id: 6, title: "Hôtel Particulier Classé — Cœur Historique", price: 8900000, location: "Paris", type: "Appartement", status: "Vente", area: 510, rooms: 6, baths: 5, image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", desc: "Demeure historique d'une rareté absolue, entièrement réhabilitée dans les règles de l'art.", amenities: ["Monuments Historiques", "Cour d'Honneur"] }
-];
+let PROPERTIES = [];
 
 
 // LOGIQUE HEADER RÉTRACTABLE AU SCROLL
@@ -110,7 +103,7 @@ function setOperationFilter(value, button) {
 // }
 
 function createPropertyCard(item) {
-    const displayPrice = item.status === "Location" ? `${item.price.toLocaleString("fr-FR")} € / mois` : `${item.price.toLocaleString("fr-FR")} €`;
+    const displayPrice = item.status === "Location" ? `${item.price.toLocaleString("fr-FR")} F CFA / mois` : `${item.price.toLocaleString("fr-FR")} F CFA`;
     return `
         <div class="group bg-white rounded-[20px] overflow-hidden shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:shadow-[0_30px_60px_rgba(1,44,78,0.06)] transition-all duration-500 flex flex-col h-full">
             <div class="relative overflow-hidden aspect-[16/11]">
@@ -170,7 +163,6 @@ function openInterestModal(propertyTitle) {
         preConfirm: () => {
             const name = document.getElementById('swal-name').value;
             const email = document.getElementById('swal-email').value;
-
             if (!name || !email) {
                 Swal.showValidationMessage('Le nom et l\'adresse électronique sont requis.');
                 return false;
@@ -185,16 +177,35 @@ function openInterestModal(propertyTitle) {
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            // Les données saisies sont disponibles ici dans result.value
-            console.log("Formulaire soumis :", result.value);
-
-            // Notification Premium de succès
-            Swal.fire({
-                icon: "success",
-                title: "Demande de gérance enregistrée",
-                text: "Un conseiller dédié à l'immobilier d'exception prendra contact avec vous sous 24h.",
-                confirmButtonColor: "#012C4E",
-                customClass: { popup: 'rounded-[24px]' }
+            fetch(contactInteretUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                },
+                body: JSON.stringify({
+                    name: result.value.name,
+                    email: result.value.email,
+                    phone: result.value.phone,
+                    message: result.value.message,
+                    bien_titre: result.value.property
+                })
+            }).then(res => {
+                if (!res.ok) throw new Error('Erreur réseau');
+                Swal.fire({
+                    icon: "success",
+                    title: "Demande de gérance enregistrée",
+                    text: "Un conseiller dédié à l'immobilier d'exception prendra contact avec vous sous 24h.",
+                    confirmButtonColor: "#012C4E",
+                    customClass: { popup: 'rounded-[24px]' }
+                });
+            }).catch(() => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erreur",
+                    text: "Une erreur est survenue. Veuillez réessayer.",
+                    confirmButtonColor: "#012C4E",
+                });
             });
         }
     });
@@ -202,19 +213,21 @@ function openInterestModal(propertyTitle) {
 
 function applyFilters() {
     const gridContainer = document.getElementById("grid-catalogue");
-    gridContainer.classList.add("loading"); // Amorce transition floue
+    gridContainer.classList.add("loading");
 
     setTimeout(() => {
         const status = document.getElementById("filter-status").value;
         const type = document.getElementById("filter-type").value;
         const city = document.getElementById("filter-city").value;
         const rooms = document.getElementById("filter-rooms").value;
+        const budget = document.getElementById("filter-budget").value;
 
         const filtered = PROPERTIES.filter((item) => {
             if (status && item.status !== status) return false;
             if (type && item.type !== type) return false;
             if (city && item.location !== city) return false;
             if (rooms && item.rooms < parseInt(rooms)) return false;
+            if (budget && item.price > parseInt(budget)) return false;
             return true;
         });
 
@@ -231,8 +244,8 @@ function resetFilters() {
     document.getElementById("filter-type").value = "";
     document.getElementById("filter-city").value = "";
     document.getElementById("filter-rooms").value = "";
+    document.getElementById("filter-budget").value = "";
 
-    // Reset spécifique du tab d'opération vers "Tous"
     const firstTab = document.getElementById("tab-bg").parentNode.querySelector('button');
     setOperationFilter('', firstTab);
 }
@@ -334,16 +347,21 @@ function SwAlertEstimer() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    const el = document.getElementById('liste-biens-data');
+    if (el) PROPERTIES = JSON.parse(el.textContent);
+
     const params = new URLSearchParams(window.location.search);
     const locParam = params.get("loc");
     const typeParam = params.get("type");
+    const budgetParam = params.get("budget");
     const idParam = params.get("id");
 
     if (idParam) {
-        showDetail(parseInt(idParam));
+        window.location.href = `${baseUrlDetails}?id=${idParam}`;
     } else {
         if (locParam) document.getElementById("filter-city").value = locParam;
         if (typeParam) document.getElementById("filter-type").value = typeParam;
+        if (budgetParam) document.getElementById("filter-budget").value = budgetParam;
         applyFilters();
     }
 });

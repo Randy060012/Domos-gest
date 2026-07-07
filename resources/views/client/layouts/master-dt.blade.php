@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dossier Technique Exclusif | DOMOS</title>
 
     <!-- Polices Premium : Playfair Display (Titres) & Plus Jakarta Sans (Corps) -->
@@ -48,7 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .glass-nav {
-            background: rgba(255, 255, 255, 0.80);
+            background: rgba(24, 28, 33, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
@@ -65,7 +66,7 @@
     </style>
 </head>
 
-<body class="bg-[#FBFBFC] text-slate-900 font-sans antialiased selection:bg-gold-500/30">
+<body class="bg-[#fafafa] text-slate-900 font-sans antialiased selection:bg-gold-500/30">
 
     <!-- HEADER RAFFINÉ -->
     @include('client.layouts.header-dt')

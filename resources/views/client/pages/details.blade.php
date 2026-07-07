@@ -16,7 +16,7 @@
             </div>
             <div class="lg:text-right w-full lg:w-auto border-t lg:border-t-0 border-slate-100 pt-6 lg:pt-0">
                 <span class="text-[10px] text-slate-400 block font-bold uppercase tracking-[0.2em] mb-1">Valeur Vénale Présentée</span>
-                <span id="bien-prix" class="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-wide text-navy-900">0 €</span>
+                <span id="bien-prix" class="text-3xl sm:text-4xl lg:text-5xl font-serif font-light tracking-wide text-navy-900">0 F CFA</span>
                 <span id="bien-honoraires" class="text-[11px] block text-slate-400 font-light mt-2 italic">...</span>
             </div>
         </div>
@@ -162,4 +162,5 @@
             </div>
         </div>
     </main>
+    <script id="detail-bien-data" type="application/json">@json($data)</script>
     @endsection

@@ -50,9 +50,9 @@
                         <select id="search-budget"
                             class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
                             <option value="">Illimité</option>
-                            <option value="1500000">1 500 000 €</option>
-                            <option value="3000000">3 000 000 €</option>
-                            <option value="5000000">5 000 000 €</option>
+                            <option value="1500000">1 500 000 F CFA</option>
+                            <option value="3000000">3 000 000 F CFA</option>
+                            <option value="5000000">5 000 000 F CFA</option>
                         </select>
                     </div>
                     <button type="submit"
@@ -106,7 +106,7 @@
 
                 <div class="grid grid-cols-3 gap-6 pt-8 border-t border-slate-800">
                     <div class="space-y-1">
-                        <span class="block text-3xl font-serif text-gold-500">2.5B€+</span>
+                        <span class="block text-3xl font-serif text-gold-500">2.5B F CFA+</span>
                         <span class="text-[10px] text-slate-400 uppercase tracking-widest block">Volume
                             d'Actifs</span>
                     </div>
@@ -254,7 +254,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div
-                    class="group bg-[#FBFBFC] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
+                    class="group bg-[#fafafa] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
                     <div
                         class="w-12 h-12 text-gold-600 flex items-center justify-center text-2xl mb-6 bg-white rounded-2xl shadow-sm">
                         <i class="fa-solid fa-bell"></i>
@@ -266,7 +266,7 @@
                         sur-mesure : intendance, réservations exclusives et accueil de vos invités de marque.</p>
                 </div>
                 <div
-                    class="group bg-[#FBFBFC] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
+                    class="group bg-[#fafafa] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
                     <div
                         class="w-12 h-12 text-gold-600 flex items-center justify-center text-2xl mb-6 bg-white rounded-2xl shadow-sm">
                         <i class="fa-solid fa-compass-drafting"></i>
@@ -278,7 +278,7 @@
                         espaces par des designers de renom pour façonner un lieu qui vous ressemble.</p>
                 </div>
                 <div
-                    class="group bg-[#FBFBFC] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
+                    class="group bg-[#fafafa] rounded-3xl p-8 border border-slate-100 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(1,44,78,0.04)]">
                     <div
                         class="w-12 h-12 text-gold-600 flex items-center justify-center text-2xl mb-6 bg-white rounded-2xl shadow-sm">
                         <i class="fa-solid fa-hammer"></i>
@@ -383,7 +383,7 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-[#FBFBFC] p-6 sm:p-8 rounded-3xl border border-slate-100">
+            <div class="lg:col-span-2 bg-[#fafafa] p-6 sm:p-8 rounded-3xl border border-slate-100">
                 <form onsubmit="handleContactForm(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <input type="text" placeholder="Votre nom complet" required
                         class="w-full bg-white border border-slate-100 rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:ring-1 focus:ring-gold-500 transition" />
@@ -401,4 +401,9 @@
         </div>
     </section>
 </main>
+<script id="home-biens-data" type="application/json">@json($biens)</script>
+<script>
+const baseUrlDetails = "{{ route('details.home') }}";
+const contactInteretUrl = "{{ route('contact.interet') }}";
+</script>
 @endsection

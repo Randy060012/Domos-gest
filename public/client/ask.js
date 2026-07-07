@@ -1,4 +1,3 @@
-// Effet de réduction du header au défilement
 window.addEventListener('scroll', () => {
     const header = document.getElementById('main-header');
     if (window.scrollY > 50) {
@@ -10,25 +9,58 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Alerte de soumission personnalisée haut de gamme
 function handleDemandeSpecifique(event) {
     event.preventDefault();
-    Swal.fire({
-        icon: "success",
-        title: "Mandat de recherche enregistré",
-        text: "Notre cellule d'acquisition privée va analyser vos critères sous 24 heures.",
-        confirmButtonColor: "#012C4E",
-        customClass: {
-            popup: 'rounded-[24px]',
-            confirmButton: 'rounded-xl text-xs uppercase tracking-wider font-bold py-3 px-4'
+    const form = event.target;
+    const data = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.success) {
+            Swal.fire({
+                icon: "success",
+                title: "Mandat de recherche enregistré",
+                text: "Notre cellule d'acquisition privée va analyser vos critères sous 24 heures.",
+                confirmButtonColor: "#012C4E",
+                customClass: {
+                    popup: 'rounded-[24px]',
+                    confirmButton: 'rounded-xl text-xs uppercase tracking-wider font-bold py-3 px-4'
+                }
+            }).then(() => {
+                form.reset();
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: result.message || "Une erreur est survenue. Veuillez réessayer.",
+                confirmButtonColor: "#012C4E",
+                customClass: {
+                    popup: 'rounded-[24px]',
+                    confirmButton: 'rounded-xl text-xs uppercase tracking-wider font-bold py-3 px-4'
+                }
+            });
         }
-    }).then(() => {
-        event.target.reset();
-        window.location.href = "index.html";
+    })
+    .catch(() => {
+        Swal.fire({
+            icon: "error",
+            title: "Erreur réseau",
+            text: "Impossible de soumettre votre demande. Vérifiez votre connexion.",
+            confirmButtonColor: "#012C4E",
+            customClass: {
+                popup: 'rounded-[24px]',
+                confirmButton: 'rounded-xl text-xs uppercase tracking-wider font-bold py-3 px-4'
+            }
+        });
     });
 }
 
-// Alerte d'estimation
 function SwAlertEstimer() {
     Swal.fire({
         title: "Estimation Stratégique",

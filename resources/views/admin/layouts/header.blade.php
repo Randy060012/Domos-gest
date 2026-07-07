@@ -2,24 +2,29 @@
     <div class="container-fluid topbar-menu">
         <div class="d-flex align-items-center gap-2">
             <!-- Topbar Brand Logo -->
+            @php
+                $logoLight = App\Models\Setting::get('logo_light', 'admin/assets/images/logo.png');
+                $logoDark  = App\Models\Setting::get('logo_dark', 'admin/assets/images/logo-black.png');
+                $logoSmall = App\Models\Setting::get('logo_small', 'admin/assets/images/logo-sm.png');
+            @endphp
             <div class="logo-topbar">
                 <!-- Logo light -->
-                <a href="index.html" class="logo-light">
+                <a href="{{ route('admin.dashboard') }}" class="logo-light">
                     <span class="logo-lg">
-                        <img src="assets/images/logo.png" alt="logo">
+                        <img src="{{ asset($logoLight) }}" alt="logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="small logo">
+                        <img src="{{ asset($logoSmall) }}" alt="small logo">
                     </span>
                 </a>
 
                 <!-- Logo Dark -->
-                <a href="index.html" class="logo-dark">
+                <a href="{{ route('admin.dashboard') }}" class="logo-dark">
                     <span class="logo-lg">
-                        <img src="assets/images/logo-black.png" alt="dark logo">
+                        <img src="{{ asset($logoDark) }}" alt="dark logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="small logo">
+                        <img src="{{ asset($logoSmall) }}" alt="small logo">
                     </span>
                 </a>
             </div>
@@ -596,7 +601,7 @@
                         <img src="assets/images/users/user-3.jpg" width="32"
                             class="rounded-circle me-lg-2 d-flex" alt="user-image">
                         <div class="d-lg-flex align-items-center gap-1 d-none">
-                            <h5 class="my-0">Geneva</h5>
+                            <h5 class="my-0">{{ Auth::user()->name }}</h5>
                             <i class="ti ti-chevron-down align-middle"></i>
                         </div>
                     </a>
@@ -640,9 +645,9 @@
                         </a>
 
                         <!-- Logout -->
-                        <a href="javascript:void(0);" class="dropdown-item fw-semibold">
+                        <a href="javascript:void(0);" class="dropdown-item fw-semibold" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="ti ti-logout-2 me-1 fs-17 align-middle"></i>
-                            <span class="align-middle">Log Out</span>
+                            <span class="align-middle">Déconnexion</span>
                         </a>
                     </div>
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Biens;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -12,8 +14,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
-        return view('client.pages.home');
+        $biens = Biens::with('images')->where('est_actif', true)->latest()->get()->map(fn($b) => [
+            'id'       => $b->id,
+            'title'    => $b->titre,
+            'price'    => (float) $b->prix,
+            'location' => $b->localisation,
+            'type'     => $b->type ?? '',
+            'status'   => match ($b->statut) { 'VENTE' => 'Vente', 'LOCATION' => 'Location', default => $b->statut },
+            'area'     => $b->surface_habitable ?? 0,
+            'rooms'    => $b->pieces ?? 0,
+            'image'    => ($img = $b->imagePrincipale()) ? Storage::url($img->image_path) : '',
+            'desc'     => \Illuminate\Support\Str::limit($b->description ?? '', 120),
+            'isRecent' => $b->created_at->diffInDays(now()) < 30,
+        ]);
+
+        return view('client.pages.home', compact('biens'));
     }
 
     /**

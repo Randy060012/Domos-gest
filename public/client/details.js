@@ -1,48 +1,4 @@
-  // Simulation de données riches incluant une galerie complète d'images
-        const DATA_EXEMPLE_BIEN = {
-            ref: "REF-2026-VILLA99",
-            titre: "Villa Lumina — Édifice Contemporain Face Mer",
-            prix: 4950000,
-            honoraires: "Honoraires entièrement à la charge du vendeur",
-            localisation: "Super Cannes, Alpes-Maritimes (06)",
-            statut: "EXCLUSIVITÉ",
-            // Banque d'images pour le carrousel
-            galerie_images: [
-                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
-                "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80"
-            ],
-            description: "Située sur le secteur exclusif des collines de Cannes, cette architecture contemporaine majeure développe des prestations d'ingénierie et de confort de très haut standing.\n\nSes volumes intérieurs profitent d'une transparence absolue vers le jardin méditerranéen grâce à des structures vitrées minimalistes entièrement motorisées.",
-            type: "Villa d'Architecte",
-            surface_habitable: 420,
-            surface_terrain: 2500,
-            pieces: 9,
-            chambres: 5,
-            salles_bain: 5,
-            annee_construction: 2024,
-            chauffage: "Pompe à chaleur réversible (sol & gainable)",
-            etat: "Neuf / Excellent état",
-            exposition: "Sud / Sud-Ouest",
-            dpe_classe: "A",
-            dpe_valeur: 42,
-            ges_classe: "A",
-            ges_valeur: 2,
-            taxe_fonciere: "4 250 € / an",
-            charges_copropriete: "Aucune (Mono-propriété)",
-            nombre_lots: "Non soumis",
-            procedure_en_cours: "Non",
-            prestations: [
-                "Piscine miroir chauffée (18m x 4m)",
-                "Espace Spa avec Sauna et Hammam",
-                "Domotique intégrée totale (Lumières, Stores)",
-                "Système de sécurité actif avec caméras thermiques",
-                "Garage souterrain sécurisé pour 4 véhicules",
-                "Ascenseur intérieur en verre structurel",
-                "Cave à vin climatisée de dégustation"
-            ]
-        };
+  let DATA_EXEMPLE_BIEN = {};
 
         const PALETTE_DPE = {
             "A": "#012C4E",
@@ -137,16 +93,21 @@
         }
 
         function handleDownloadPDF() {
-            Swal.fire({
-                icon: "info",
-                title: "Compilation du livret",
-                text: "Le livret technique confidentiel est en cours de sécurisation et va démarrer son téléchargement.",
-                confirmButtonColor: "#012C4E",
-                customClass: {
-                    popup: 'rounded-[24px]',
-                    confirmButton: 'rounded-xl text-xs uppercase font-bold py-3 px-4'
-                }
-            });
+            const pdfUrl = DATA_EXEMPLE_BIEN.fiche_technique;
+            if (pdfUrl) {
+                window.open(pdfUrl, '_blank');
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    title: "Indisponible",
+                    text: "Aucune fiche technique n'est encore associée à ce bien.",
+                    confirmButtonColor: "#012C4E",
+                    customClass: {
+                        popup: 'rounded-[24px]',
+                        confirmButton: 'rounded-xl text-xs uppercase font-bold py-3 px-4'
+                    }
+                });
+            }
         }
 
         function hydraterLeModele() {
@@ -156,7 +117,7 @@
             document.getElementById("bien-ref").innerText = `RÉFÉRENCE : ${data.ref}`;
             document.getElementById("bien-titre").innerText = data.titre;
             document.getElementById("bien-localisation").innerText = data.localisation;
-            document.getElementById("bien-prix").innerText = data.prix.toLocaleString("fr-FR") + " €";
+            document.getElementById("bien-prix").innerText = data.prix.toLocaleString("fr-FR") + " F CFA";
             document.getElementById("bien-honoraires").innerText = data.honoraires;
 
             // Image initiale par défaut
@@ -222,4 +183,8 @@
             `).join("");
         }
 
-        window.addEventListener("DOMContentLoaded", hydraterLeModele);
+        window.addEventListener("DOMContentLoaded", () => {
+            const el = document.getElementById('detail-bien-data');
+            if (el) DATA_EXEMPLE_BIEN = JSON.parse(el.textContent);
+            hydraterLeModele();
+        });

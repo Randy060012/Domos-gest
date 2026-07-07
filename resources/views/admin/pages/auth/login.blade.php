@@ -15,16 +15,16 @@
     <meta name="author" content="Coderthemes">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ URL::asset('admin/assets/images/favicon.ico') }}">
 
     <!-- Theme Config Js -->
-    <script src="{{ URL::asset('assets/js/config.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/config.js') }}"></script>
 
     <!-- Vendor css -->
-    <link href="{{ URL::asset('assets/css/vendors.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('admin/assets/css/vendors.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- App css -->
-    <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -34,6 +34,14 @@
 
                 @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
                 @endif
 
                 <!--Auth Box content -->
@@ -122,11 +130,15 @@
                     </div>
                     <div class="card-body min-vh-100 d-flex flex-column justify-content-center">
                         <div class="auth-brand mb-0 text-center">
-                            <a href="index.html" class="logo-dark">
-                                <img src="assets/images/logo-black.png" alt="dark logo" height="28">
+                            @php
+                                $logoLight = App\Models\Setting::get('logo_light', 'admin/assets/images/logo.png');
+                                $logoDark  = App\Models\Setting::get('logo_dark', 'admin/assets/images/logo-black.png');
+                            @endphp
+                            <a href="{{ route('admin.dashboard') }}" class="logo-dark">
+                                <img src="{{ asset($logoDark) }}" alt="dark logo" height="28">
                             </a>
-                            <a href="index.html" class="logo-light">
-                                <img src="assets/images/logo.png" alt="logo" height="28">
+                            <a href="{{ route('admin.dashboard') }}" class="logo-light">
+                                <img src="{{ asset($logoLight) }}" alt="logo" height="28">
                             </a>
                         </div>
 
@@ -134,7 +146,7 @@
                             <p class="text-muted text-center auth-sub-text mx-auto">Let’s get you signed in. Enter your
                                 email and password to continue.</p>
 
-                            <form class="mt-4" method="POST" action="/login">
+                            <form class="mt-4" method="POST" action="{{ route('admin.login') }}">
                                 @csrf
 
                                 <div class="mb-3">
@@ -159,8 +171,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-3">
 
-                                    <a href="auth-2-reset-pass.html"
-                                        class="text-decoration-underline link-offset-3 text-muted">Forgot Password?</a>
+                                    <span class="text-muted">Accès réservé aux administrateurs</span>
                                 </div>
 
                                 <div class="d-grid">
@@ -170,15 +181,11 @@
                         </div>
 
                         <p class="text-muted text-center mt-4 mb-0">
-                            New here? <a href="auth-2-sign-up.html"
-                                class="text-decoration-underline link-offset-3 fw-semibold">Create an account</a>
+                            <span class="fw-semibold">DOMOS - Administration</span>
                         </p>
 
                         <p class="text-center text-muted mt-auto mb-0">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script> O-insure — by <span class="fw-semibold">ORION PRO</span>
+                            &copy; 2026 <span class="fw-semibold">DOMOS</span> — Tous droits réservés.
                         </p>
                     </div>
                 </div>
@@ -186,7 +193,7 @@
             </div>
             <div class="col">
                 <div class="h-100 position-relative card-side-img overflow-hidden">
-                    <img src="{{ asset('assets/images/login-img.jpeg') }}" alt="" class="w-100 h-100 position-absolute top-0 start-0 object-cover">
+                    <img src="{{ asset('admin/assets/images/login-img.jpeg') }}" alt="" class="w-100 h-100 position-absolute top-0 start-0 object-cover">
                 </div>
             </div>
 
@@ -194,10 +201,10 @@
     </div>
 
     <!-- Vendor js -->
-    <script src="{{ URL::asset('assets/js/vendors.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/vendors.min.js') }}"></script>
 
     <!-- App js -->
-    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('admin/assets/js/app.js') }}"></script>
 
 </body>
 
@@ -208,6 +215,13 @@
 
     .object-cover {
         object-fit: cover;
+    }
+
+    body {
+        background-color: #181c21 !important;
+    }
+    .auth-box-form {
+        background-color: #fafafa !important;
     }
 </style>
 <!-- Mirrored from coderthemes.com/ubold/html/auth-2-sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Jan 2026 13:08:41 GMT -->

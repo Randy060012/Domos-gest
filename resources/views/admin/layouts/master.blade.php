@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard | ORION - Insure</title>
+    <title>Dashboard | {{ App\Models\Setting::get('site_name', 'DOMOS') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
         content="UBold is a modern, responsive admin dashboard available on ThemeForest. Ideal for building CRM, CMS, project management tools, and custom web applications with a clean UI, flexible layouts, and rich features.">
@@ -25,6 +25,56 @@
 
     <!-- App css -->
     <link href="{{ URL::asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        :root {
+            --bg-primary: #181c21;
+            --bg-secondary: #fafafa;
+        }
+        body {
+            background-color: var(--bg-secondary) !important;
+        }
+        .sidenav-menu {
+            background-color: var(--bg-primary) !important;
+        }
+        .navbar-custom {
+            background-color: var(--bg-primary) !important;
+        }
+        .side-nav-title {
+            color: rgba(255,255,255,0.35) !important;
+        }
+        .side-nav-link {
+            color: rgba(255,255,255,0.65) !important;
+        }
+        .side-nav-link:hover,
+        .side-nav-item.active .side-nav-link {
+            color: #fff !important;
+            background: rgba(255,255,255,0.08) !important;
+        }
+        .side-nav-link .menu-icon {
+            color: rgba(255,255,255,0.5) !important;
+        }
+        .side-nav-link .menu-text {
+            color: inherit !important;
+        }
+        .sidenav-user-name {
+            color: #fff !important;
+        }
+        .logo-lg img,
+        .logo-topbar img {
+            filter: brightness(0) invert(1);
+        }
+        .card {
+            background-color: #fff !important;
+        }
+        .footer {
+            background-color: #fff !important;
+            border-top-color: #e9ecef !important;
+        }
+    </style>
+    @stack('styles')
 </head>
 
 <body>
@@ -47,6 +97,20 @@
         <!-- ============================================================== -->
 
         <div class="content-page">
+
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mx-3 mt-3 mb-0">
+                <i class="ti ti-check me-1"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
+
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mx-3 mt-3 mb-0">
+                <i class="ti ti-alert-circle me-1"></i> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
 
             @yield('contenu')
             <!-- container -->
@@ -439,6 +503,13 @@
 
     <!-- Dashboard Page js -->
     <script src="{{ URL::asset('admin/assets/js/pages/dashboard.js') }}"></script>
+
+    @stack('scripts')
+
+    <!-- Logout form global -->
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 
 </body>
 

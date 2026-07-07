@@ -2,42 +2,29 @@
 
 @section('contenu')
     <div class="container-fluid">
-
-
         <div class="page-title-head d-flex align-items-center">
             <div class="flex-grow-1">
-                <h4 class="fs-xl fw-bold m-0">Apporteurs</h4>
+                <h4 class="fs-xl fw-bold m-0">Demandes</h4>
             </div>
-
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-
-                    <li class="breadcrumb-item active">Apporteurs</li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Demandes</li>
                 </ol>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-12">
                 <div data-table data-table-rows-per-page="8" class="card">
                     <div class="card-header border-light justify-content-between">
-
                         <div class="d-flex gap-2">
                             <div class="app-search">
-                                <input data-table-search type="search" class="form-control"
-                                    placeholder="Search category...">
+                                <input data-table-search type="search" class="form-control" placeholder="Search...">
                                 <i data-lucide="search" class="app-search-icon text-muted"></i>
                             </div>
-
-                            <button data-table-delete-selected class="btn btn-danger d-none">Delete</button>
                         </div>
-
                         <div class="d-flex align-items-center gap-1">
-                            <!-- Records Per Page -->
                             <div>
                                 <select data-table-set-rows-per-page class="form-select form-control my-1 my-md-0">
                                     <option value="5">5</option>
@@ -46,21 +33,6 @@
                                     <option value="20">20</option>
                                 </select>
                             </div>
-
-                            <!-- Status Filter -->
-                            <div class="app-search">
-                                <select data-table-filter="status" class="form-select form-control my-1 my-md-0">
-                                    <option value="">All</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                </select>
-                                <i data-lucide="circle" class="app-search-icon text-muted"></i>
-                            </div>
-
-                            <a href="#!" class="btn btn-primary ms-1" data-bs-toggle="modal"
-                                data-bs-target="#addCategoryModal">
-                                <i data-lucide="plus" class="fs-sm me-2"></i> Add Category
-                            </a>
                         </div>
                     </div>
 
@@ -69,265 +41,59 @@
                             <thead class="bg-light align-middle bg-opacity-25 thead-sm">
                                 <tr class="text-uppercase fs-xxs">
                                     <th class="ps-3" style="width: 1%;">
-                                        <input data-table-select-all
-                                            class="form-check-input form-check-input-light fs-14 mt-0" type="checkbox"
-                                            value="option">
+                                        <input data-table-select-all class="form-check-input form-check-input-light fs-14 mt-0" type="checkbox">
                                     </th>
-                                    <th data-table-sort="product">Category Name</th>
-                                    <th data-table-sort>Slug</th>
-                                    <th data-table-sort>Products</th>
-                                    <th data-table-sort>Orders</th>
-                                    <th data-table-sort>Earnings</th>
-                                    <th data-table-sort>Last Modify</th>
-                                    <th data-table-sort data-column="status">Status</th>
+                                    <th data-table-sort="name">Nom</th>
+                                    <th data-table-sort="email">Email</th>
+                                    <th data-table-sort="phone">Téléphone</th>
+                                    <th data-table-sort="bien">Bien</th>
+                                    <th data-table-sort="date">Date</th>
                                     <th class="text-center" style="width: 1%;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($demandes as $d)
                                 <tr>
                                     <td class="ps-3">
-                                        <input class="form-check-input form-check-input-light fs-14 product-item-check mt-0"
-                                            type="checkbox" value="option">
+                                        <input class="form-check-input form-check-input-light fs-14 product-item-check mt-0" type="checkbox">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="avatar-md me-3">
-                                                <img src="assets/images/products/1.png" alt="Product"
-                                                    class="img-fluid rounded">
+                                            <div class="avatar-sm me-2 bg-soft-primary rounded-circle d-flex align-items-center justify-content-center">
+                                                <span class="fw-semibold text-primary fs-xs">{{ strtoupper(substr($d->name, 0, 1)) }}</span>
                                             </div>
-                                            <div>
-                                                <h5 class="mb-0">
-                                                    <a data-sort="product" href="ecommerce-product-details.html"
-                                                        class="link-reset">Furnitures</a>
-                                                </h5>
-                                            </div>
+                                            <span class="fw-medium">{{ $d->name }}</span>
                                         </div>
                                     </td>
-                                    <td>furniture</td>
-                                    <td>
-                                        <h5 class="fs-base mb-0 fw-medium">5248</h5>
-                                    </td>
-                                    <td>95.6k</td>
-                                    <td>$40.5M</td>
-                                    <td>18 Apr, 2025 <small class="text-muted">12:24 PM</small></td>
-                                    <td><span class="badge badge-soft-success fs-xxs">Active</span></td>
-                                    <td>
+                                    <td><a href="mailto:{{ $d->email }}" class="link-reset">{{ $d->email }}</a></td>
+                                    <td>{{ $d->phone ?? '-' }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($d->bien_titre, 30) ?? '-' }}</td>
+                                    <td>{{ $d->created_at->format('d/m/Y H:i') }}</td>
+                                    <td class="text-center">
                                         <div class="d-flex justify-content-center gap-1">
-                                            <a href="{{URL::to('/apporteur-detail')}}" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-eye fs-lg"></i></a>
-                                            <a href="#" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-edit fs-lg"></i></a>
-                                            <a href="#" data-table-delete-row
-                                                class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-trash fs-lg"></i></a>
+                                            <a href="{{ route('admin.demandes.show', $d) }}" class="btn btn-default btn-icon btn-sm rounded-circle">
+                                                <i class="ti ti-eye fs-lg"></i>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
-
+                                @empty
                                 <tr>
-                                    <td class="ps-3">
-                                        <input class="form-check-input form-check-input-light fs-14 product-item-check mt-0"
-                                            type="checkbox" value="option">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-md me-3">
-                                                <img src="assets/images/products/2.png" alt="Product"
-                                                    class="img-fluid rounded">
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">
-                                                    <a data-sort="product" href="ecommerce-product-details.html"
-                                                        class="link-reset">Electronics</a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>electronics</td>
-                                    <td>
-                                        <h5 class="fs-base mb-0 fw-medium">9854</h5>
-                                    </td>
-                                    <td>112.3k</td>
-                                    <td>$30.4M</td>
-                                    <td>20 Apr, 2025 <small class="text-muted">09:10 AM</small></td>
-                                    <td><span class="badge badge-soft-success fs-xxs">Active</span></td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-1">
-                                            <a href="{{URL::to('/apporteur-detail')}}" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-eye fs-lg"></i></a>
-                                            <a href="#" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-edit fs-lg"></i></a>
-                                            <a href="#" data-table-delete-row
-                                                class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-trash fs-lg"></i></a>
-                                        </div>
-                                    </td>
+                                    <td colspan="7" class="text-center py-5 text-muted">Aucune demande pour le moment.</td>
                                 </tr>
-
-                                <tr>
-                                    <td class="ps-3">
-                                        <input
-                                            class="form-check-input form-check-input-light fs-14 product-item-check mt-0"
-                                            type="checkbox" value="option">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-md me-3">
-                                                <img src="assets/images/products/3.png" alt="Product"
-                                                    class="img-fluid rounded">
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">
-                                                    <a data-sort="product" href="ecommerce-product-details.html"
-                                                        class="link-reset">Smartphones</a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>electronics-smartphones</td>
-                                    <td>
-                                        <h5 class="fs-base mb-0 fw-medium">1324</h5>
-                                    </td>
-                                    <td>50.1k</td>
-                                    <td>$22.3M</td>
-                                    <td>22 Apr, 2025 <small class="text-muted">11:45 AM</small></td>
-                                    <td><span class="badge badge-soft-danger fs-xxs">Inactive</span></td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-1">
-                                            <a href="{{URL::to('/apporteur-detail')}}" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-eye fs-lg"></i></a>
-                                            <a href="#" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-edit fs-lg"></i></a>
-                                            <a href="#" data-table-delete-row
-                                                class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-trash fs-lg"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="ps-3">
-                                        <input
-                                            class="form-check-input form-check-input-light fs-14 product-item-check mt-0"
-                                            type="checkbox" value="option">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-md me-3">
-                                                <img src="assets/images/products/4.png" alt="Product"
-                                                    class="img-fluid rounded">
-                                            </div>
-                                            <div>
-                                                <h5 class="mb-0">
-                                                    <a data-sort="product" href="ecommerce-product-details.html"
-                                                        class="link-reset">Headphones</a>
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>accessories</td>
-                                    <td>
-                                        <h5 class="fs-base mb-0 fw-medium">5123</h5>
-                                    </td>
-                                    <td>70.8k</td>
-                                    <td>$5.7M</td>
-                                    <td>25 Apr, 2025 <small class="text-muted">08:20 AM</small></td>
-                                    <td><span class="badge badge-soft-success fs-xxs">Active</span></td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-1">
-                                            <a href="{{URL::to('/apporteur-detail')}}" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-eye fs-lg"></i></a>
-                                            <a href="#" class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-edit fs-lg"></i></a>
-                                            <a href="#" data-table-delete-row
-                                                class="btn btn-default btn-icon btn-sm rounded-circle"><i
-                                                    class="ti ti-trash fs-lg"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-
+                                @endforelse
                             </tbody>
                         </table>
-
                     </div>
+
                     <div class="card-footer border-0">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div data-table-pagination-info="categories"></div>
+                            <div data-table-pagination-info="demandes"></div>
                             <div data-table-pagination></div>
                         </div>
                     </div>
                 </div>
-
-            </div><!-- end col -->
-        </div><!-- end row -->
-
-
-        <!-- Add New Category Modal -->
-        <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <form id="addCategoryForm">
-                        <div class="modal-body">
-                            <div class="row g-3">
-
-                                <!-- Category Name -->
-                                <div class="col-md-6">
-                                    <label for="categoryName" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control" id="categoryName"
-                                        placeholder="e.g. Electronics" required>
-                                </div>
-
-                                <!-- Slug -->
-                                <div class="col-md-6">
-                                    <label for="categorySlug" class="form-label">Slug</label>
-                                    <input type="text" class="form-control" id="categorySlug"
-                                        placeholder="e.g. electronics" required>
-                                </div>
-
-                                <!-- Image Upload -->
-                                <div class="col-md-12">
-                                    <label for="categoryImage" class="form-label">Category Image</label>
-                                    <input type="file" class="form-control" id="categoryImage" accept="image/*">
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col-md-6">
-                                    <label for="categoryStatus" class="form-label">Status</label>
-                                    <select id="categoryStatus" class="form-select" required>
-                                        <option value="">Select Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-
-                                <!-- Optional: Description -->
-                                <div class="col-md-12">
-                                    <label for="categoryDescription" class="form-label">Description (Optional)</label>
-                                    <textarea id="categoryDescription" class="form-control" rows="3"
-                                        placeholder="Brief description of the category..."></textarea>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add Category</button>
-                        </div>
-                    </form>
-
-                </div>
             </div>
         </div>
-
-
     </div>
 @endsection

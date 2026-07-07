@@ -1,69 +1,4 @@
-const PROPERTIES = [{
-    id: 1,
-    title: "Villa Lumina — Édifice Contemporain",
-    price: 4950000,
-    location: "Cannes",
-    type: "Villa",
-    status: "Vente",
-    area: 420,
-    rooms: 5,
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-    desc: "Chef-d'œuvre architectural idéalement positionné sur les hauteurs. Domotique intégrée et piscine à débordement.",
-    isRecent: true
-},
-{
-    id: 2,
-    title: "Penthouse Impérial — Vue Panoramique",
-    price: 3200000,
-    location: "Paris",
-    type: "Appartement",
-    status: "Vente",
-    area: 195,
-    rooms: 3,
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
-    desc: "Dernier étage d'un immeuble de grand standing. Panoramas d'exception sans aucun vis-à-vis sur les monuments historiques.",
-    isRecent: true
-},
-{
-    id: 3,
-    title: "Le Domaine de l'Olympe — Propriété Rare",
-    price: 12500000,
-    location: "Saint-Tropez",
-    type: "Villa",
-    status: "Vente",
-    area: 680,
-    rooms: 7,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    desc: "Niché au cœur d'un domaine clos d'un hectare hautement surveillé. Accès direct et exclusif à la mer.",
-    isRecent: true
-},
-{
-    id: 4,
-    title: "Duplex Signature — Échappée Jardin Privé",
-    price: 18500,
-    location: "Paris",
-    type: "Appartement",
-    status: "Location",
-    area: 240,
-    rooms: 4,
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
-    desc: "Prestations intérieures luxueuses confiées à un grand nom du design d'espace. Jardin d'hiver sous verrière.",
-    isRecent: true
-},
-{
-    id: 5,
-    title: "Villa Turquoise — Écrin Suspendu",
-    price: 25000,
-    location: "Cannes",
-    type: "Villa",
-    status: "Location",
-    area: 310,
-    rooms: 4,
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
-    desc: "Vue plongeante grandiose sur la mer. Service de conciergerie privée disponible tout au long de votre séjour.",
-    isRecent: false
-}
-];
+let PROPERTIES = [];
 
 // LOGIQUE SCRIPT SCROLL HEADER RÉTRACTABLE
 window.addEventListener('scroll', () => {
@@ -119,9 +54,10 @@ function toggleMobileMenu() {
 // }
 
 function createPropertyCard(item) {
-    const displayPrice = item.status === "Location" ? `${item.price.toLocaleString("fr-FR")} € / mois` : `${item.price.toLocaleString("fr-FR")} €`;
+    const displayPrice = item.status === "Location" ? `${item.price.toLocaleString("fr-FR")} F CFA / mois` : `${item.price.toLocaleString("fr-FR")} F CFA`;
+    const detailUrl = `${baseUrlDetails}?id=${item.id}`;
     return `
-        <div class="group bg-white rounded-[20px] overflow-hidden shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:shadow-[0_30px_60px_rgba(1,44,78,0.06)] transition-all duration-500 flex flex-col h-full cursor-pointer" onclick="window.location.href='liste-biens.html?id=${item.id}'">
+        <div class="group bg-white rounded-[20px] overflow-hidden shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:shadow-[0_30px_60px_rgba(1,44,78,0.06)] transition-all duration-500 flex flex-col h-full cursor-pointer" onclick="window.location.href='${detailUrl}'">
             <div class="relative overflow-hidden aspect-[16/11]">
                 <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
                 <span class="absolute top-4 left-4 z-10 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-bold tracking-widest uppercase text-navy-900 shadow-sm">${item.status === "Vente" ? "Achat" : "Louer"}</span>
@@ -143,9 +79,9 @@ function createPropertyCard(item) {
                             Intéressé ?
                         </button>
 
-                        <span class="text-[10px] font-bold tracking-widest text-navy-900 uppercase group-hover:text-gold-500 transition-colors flex items-center space-x-1">
+                        <a href="${detailUrl}" class="text-[10px] font-bold tracking-widest text-navy-900 uppercase hover:text-gold-500 transition-colors flex items-center space-x-1">
                             <span>Détails</span> <i class="fa-solid fa-arrow-right text-[8px] transform group-hover:translate-x-0.5 transition-transform"></i>
-                        </span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -162,7 +98,12 @@ function executeSearch(event) {
     event.preventDefault();
     const loc = document.getElementById("search-loc").value;
     const type = document.getElementById("search-type").value;
-    window.location.href = `liste-biens.html?loc=${encodeURIComponent(loc)}&type=${encodeURIComponent(type)}`;
+    const budget = document.getElementById("search-budget").value;
+    const params = new URLSearchParams();
+    if (loc) params.set("loc", loc);
+    if (type) params.set("type", type);
+    if (budget) params.set("budget", budget);
+    window.location.href = `/catalogue${params.toString() ? '?' + params.toString() : ''}`;
 }
 
 function handleContactForm(event) {
@@ -222,7 +163,6 @@ function openInterestModal(propertyTitle) {
         preConfirm: () => {
             const name = document.getElementById('swal-name').value;
             const email = document.getElementById('swal-email').value;
-
             if (!name || !email) {
                 Swal.showValidationMessage('Veuillez renseigner au moins votre nom et votre adresse email.');
                 return false;
@@ -237,19 +177,42 @@ function openInterestModal(propertyTitle) {
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            // Ici, result.value contient l'objet avec toutes les données du formulaire
-            console.log("Données reçues :", result.value);
-
-            // Notification de succès
-            Swal.fire({
-                icon: "success",
-                title: "Demande enregistrée",
-                text: "Notre cabinet de gérance privée va analyser votre intérêt pour ce bien d'exception.",
-                confirmButtonColor: "#012C4E",
-                customClass: { popup: 'rounded-[24px]' }
+            fetch(contactInteretUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                },
+                body: JSON.stringify({
+                    name: result.value.name,
+                    email: result.value.email,
+                    phone: result.value.phone,
+                    message: result.value.message,
+                    bien_titre: result.value.property
+                })
+            }).then(res => {
+                if (!res.ok) throw new Error('Erreur réseau');
+                Swal.fire({
+                    icon: "success",
+                    title: "Demande enregistrée",
+                    text: "Notre cabinet de gérance privée va analyser votre intérêt pour ce bien d'exception.",
+                    confirmButtonColor: "#012C4E",
+                    customClass: { popup: 'rounded-[24px]' }
+                });
+            }).catch(() => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erreur",
+                    text: "Une erreur est survenue. Veuillez réessayer.",
+                    confirmButtonColor: "#012C4E",
+                });
             });
         }
     });
 }
 
-window.addEventListener("DOMContentLoaded", initHomepageData);
+window.addEventListener("DOMContentLoaded", () => {
+    const el = document.getElementById('home-biens-data');
+    if (el) PROPERTIES = JSON.parse(el.textContent);
+    initHomepageData();
+});
