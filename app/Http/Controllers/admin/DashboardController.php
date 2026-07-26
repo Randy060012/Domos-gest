@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Biens;
 use App\Models\Demande;
 use App\Models\DemandeSurMesure;
+use App\Models\NewsletterSubscriber;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -44,12 +45,19 @@ class DashboardController extends Controller
 
         $surMesureRecentes = DemandeSurMesure::latest()->take(5)->get();
 
+        $totalNewsletter = NewsletterSubscriber::count();
+        $newsletterMois = NewsletterSubscriber::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+        $newsletterRecentes = NewsletterSubscriber::latest()->take(5)->get();
+
         return view('admin.pages.dashboard.index', compact(
             'totalBiens', 'biensActifs', 'biensVedette',
             'totalDemandes', 'demandesMois',
             'totalSurMesure', 'surMesureMois',
             'repartitionTypes', 'prixStats',
-            'biensRecents', 'demandesRecentes', 'surMesureRecentes'
+            'biensRecents', 'demandesRecentes', 'surMesureRecentes',
+            'totalNewsletter', 'newsletterMois', 'newsletterRecentes'
         ));
     }
 }

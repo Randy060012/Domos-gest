@@ -4,6 +4,7 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Demande;
+use App\Models\NewsletterSubscriber;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,17 @@ class ContactController extends Controller
         ]);
 
         Demande::create($validated);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function newsletter(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255|unique:newsletter_subscribers,email',
+        ]);
+
+        NewsletterSubscriber::create($validated);
 
         return response()->json(['success' => true]);
     }

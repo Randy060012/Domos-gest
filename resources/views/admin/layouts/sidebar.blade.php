@@ -100,6 +100,14 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a href="{{ route('admin.newsletter.index') }}" class="side-nav-link">
+                            <span class="menu-icon"><i data-lucide="mail"></i></span>
+                            <span class="menu-text">Newsletter</span>
+                            <span class="badge text-bg-info">{{ App\Models\NewsletterSubscriber::count() }}</span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a href="{{ route('admin.settings.index') }}" class="side-nav-link">
                             <span class="menu-icon"><i data-lucide="settings"></i></span>
                             <span class="menu-text">Paramètres</span>

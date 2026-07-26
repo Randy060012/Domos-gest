@@ -47,8 +47,10 @@
                             }
                         }
                     }
+
                 },
             },
+
         };
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -69,6 +71,66 @@
         .hide-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        @keyframes fade-slide {
+
+            /*
+     Durée totale de l'animation : 15s (5 phrases x 3s chacune).
+     Chaque phrase effectue son cycle sur 20% (3s) du temps global.
+  */
+            0% {
+                opacity: 0;
+                transform: translateX(30px);
+                /* Arrive par la droite */
+            }
+
+            3% {
+                opacity: 1;
+                transform: translateX(0);
+                /* S'installe au centre */
+            }
+
+            17% {
+                opacity: 1;
+                transform: translateX(0);
+                /* Reste fixe pour la lecture */
+            }
+
+            20%,
+            100% {
+                opacity: 0;
+                transform: translateX(-30px);
+                /* S'efface vers la gauche */
+            }
+        }
+
+        .animate-fade-slide {
+            animation: fade-slide 15s ease-in-out infinite;
+        }
+
+        .animate-marquee {
+            animation: marquee 25s linear infinite;
+        }
+
+        #main-header.header-scrolled {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        @media (max-width: 767px) {
+            #main-header.header-scrolled .logo-link img {
+                height: 90%;
+            }
         }
     </style>
 </head>

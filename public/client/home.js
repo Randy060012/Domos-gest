@@ -4,11 +4,9 @@ let PROPERTIES = [];
 window.addEventListener('scroll', () => {
     const header = document.getElementById('main-header');
     if (window.scrollY > 50) {
-        header.classList.remove('h-24');
-        header.classList.add('h-16', 'shadow-[0_10px_30px_rgba(0,0,0,0.02)]');
+        header.classList.add('header-scrolled');
     } else {
-        header.classList.remove('h-16', 'shadow-[0_10px_30px_rgba(0,0,0,0.02)]');
-        header.classList.add('h-24');
+        header.classList.remove('header-scrolled');
     }
 });
 
@@ -119,13 +117,59 @@ function handleContactForm(event) {
 
 function handleNewsletter(event) {
     event.preventDefault();
-    Swal.fire({
-        icon: "success",
-        title: "Accès Privé Approuvé",
-        text: "Vous faites désormais partie de notre liste de diffusion restreinte.",
-        confirmButtonColor: "#012C4E"
+    const form = event.target;
+    const email = form.querySelector('input[type="email"]').value;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+
+    fetch('/newsletter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(async (res) => {
+        const body = await res.text();
+        let data;
+        try {
+            data = JSON.parse(body);
+        } catch {
+            data = null;
+        }
+
+        if (!res.ok) {
+            if (res.status === 419) {
+                throw new Error('Session expirée. Veuillez rafraîchir la page.');
+            }
+            if (res.status === 422) {
+                const raw = data?.errors?.email?.[0] || data?.message || 'Erreur de validation.';
+                const msg = raw.includes('already been taken')
+                    ? 'Cet email est déjà inscrit à notre newsletter.'
+                    : raw;
+                throw new Error(msg);
+            }
+            throw new Error('Erreur serveur. Veuillez réessayer.');
+        }
+        return data;
+    })
+    .then(() => {
+        Swal.fire({
+            icon: "success",
+            title: "Accès Privé Approuvé",
+            text: "Vous faites désormais partie de notre liste de diffusion restreinte.",
+            confirmButtonColor: "#012C4E"
+        });
+        form.reset();
+    })
+    .catch((err) => {
+        Swal.fire({
+            icon: "error",
+            title: "Inscription impossible",
+            text: err.message,
+            confirmButtonColor: "#012C4E"
+        });
     });
-    event.target.reset();
 }
 
 function SwAlertEstimer() {

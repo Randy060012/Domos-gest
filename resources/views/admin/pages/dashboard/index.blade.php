@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="row row-cols-xxl-4 row-cols-md-2 row-cols-1">
+        <div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1">
             <div class="col">
                 <div class="card">
                     <div class="card-body">
@@ -81,6 +81,29 @@
                             <div class="text-end">
                                 <h3 class="mb-2 fw-normal">{{ $demandesMois + $surMesureMois }}</h3>
                                 <p class="mb-0 text-muted">Demandes ce mois</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-start border-info border-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="avatar fs-60 avatar-img-size flex-shrink-0">
+                                <span class="avatar-title bg-info-subtle text-info rounded-circle fs-24">
+                                    <i class="ti ti-mail"></i>
+                                </span>
+                            </div>
+                            <div class="text-end">
+                                <h3 class="mb-2 fw-normal">
+                                    {{ $totalNewsletter }}
+                                    @if($newsletterMois > 0)
+                                        <span class="badge bg-info fs-xxs align-top ms-1">+{{ $newsletterMois }} ce mois</span>
+                                    @endif
+                                </h3>
+                                <p class="mb-0 text-muted">Inscrits newsletter</p>
                             </div>
                         </div>
                     </div>
@@ -265,6 +288,39 @@
                                 </li>
                             @empty
                                 <li class="list-group-item text-center text-muted py-3">Aucune demande</li>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card border-info border-opacity-25">
+                    <div class="card-header justify-content-between align-items-center border-dashed">
+                        <h4 class="card-title mb-0">
+                            <i class="ti ti-mail text-info me-1"></i>
+                            Nouveaux inscrits newsletter
+                        </h4>
+                        <a href="{{ route('admin.newsletter.index') }}" class="link-reset text-decoration-underline fw-semibold link-offset-3 fs-xs">
+                            Voir tout <i class="ti ti-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            @forelse ($newsletterRecentes as $subscriber)
+                                <li class="list-group-item px-3 py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="avatar-xs bg-info-subtle text-info rounded-circle d-flex align-items-center justify-content-center fw-semibold fs-xxs">
+                                                {{ strtoupper(substr($subscriber->email, 0, 1)) }}
+                                            </span>
+                                            <a href="mailto:{{ $subscriber->email }}" class="text-body fw-semibold text-truncate d-block" style="max-width: 200px;">
+                                                {{ $subscriber->email }}
+                                            </a>
+                                        </div>
+                                        <small class="text-muted text-nowrap">{{ $subscriber->created_at->format('d/m/Y') }}</small>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="list-group-item text-center text-muted py-3">Aucun inscrit pour le moment</li>
                             @endforelse
                         </ul>
                     </div>

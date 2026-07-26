@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\BiensController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\DemandeController as AdminDemandeController;
 use App\Http\Controllers\admin\DemandeSurMesureController;
+use App\Http\Controllers\admin\NewsletterController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\client\CatalogueController;
 use App\Http\Controllers\client\ContactController;
@@ -19,6 +20,7 @@ Route::get('/details', [CatalogueController::class, 'details'])->name('details.h
 Route::get('/demande', [DemandeController::class, 'index'])->name('ask.index');
 Route::post('/demande', [DemandeController::class, 'store'])->name('ask.store');
 Route::post('/contact/interet', [ContactController::class, 'store'])->name('contact.interet');
+Route::post('/newsletter', [ContactController::class, 'newsletter'])->name('newsletter');
 
 // Redirection pour le middleware 'auth' → login admin
 Route::get('/login', function () {
@@ -45,6 +47,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('demandes-sur-mesure')->name('demandes-sur-mesure.')->group(function () {
             Route::get('/', [DemandeSurMesureController::class, 'index'])->name('index');
             Route::get('/{demandeSurMesure}', [DemandeSurMesureController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('newsletter')->name('newsletter.')->group(function () {
+            Route::get('/', [NewsletterController::class, 'index'])->name('index');
         });
 
         Route::prefix('produits')->name('produits.')->group(function () {
