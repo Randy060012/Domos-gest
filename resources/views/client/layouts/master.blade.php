@@ -85,10 +85,7 @@
 
         @keyframes fade-slide {
 
-            /*
-     Durée totale de l'animation : 15s (5 phrases x 3s chacune).
-     Chaque phrase effectue son cycle sur 20% (3s) du temps global.
-  */
+
             0% {
                 opacity: 0;
                 transform: translateX(30px);
@@ -113,6 +110,22 @@
                 transform: translateX(-30px);
                 /* S'efface vers la gauche */
             }
+        }
+
+        @keyframes marquee-reverse {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        .animate-marquee-reverse {
+            display: flex;
+            width: max-content;
+            animation: marquee-reverse 25s linear infinite;
         }
 
         .animate-fade-slide {

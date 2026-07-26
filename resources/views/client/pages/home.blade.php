@@ -637,66 +637,34 @@
     <!-- NOUVELLE SECTION : PARTENAIRES (DÉFILEMENT INFINI) -->
     <section class="bg-[#F9F6F0] py-16 overflow-hidden border-t border-b border-slate-100/40">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
-            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em] block">Ils soutiennent
-                notre vision d'excellence</span>
+            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em] block">
+                Ils soutiennent notre vision d'excellence
+            </span>
         </div>
 
         <!-- Conteneur du Marquee -->
-        <div class="relative w-full flex items-center overflow-x-hidden group">
-            <!-- Dégradés esthétiques sur les côtés pour masquer la coupure -->
-            <div
-                class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#F9F6F0] to-transparent z-10 pointer-events-none">
-            </div>
-            <div
-                class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#F9F6F0] to-transparent z-10 pointer-events-none">
-            </div>
+        <div class="relative w-full flex items-center overflow-hidden group">
+            <!-- Dégradés esthétiques sur les côtés -->
+            <div class="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-[#F9F6F0] to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-[#F9F6F0] to-transparent z-10 pointer-events-none"></div>
 
-            <!-- Liste des logos animée -->
-            <div
-                class="flex space-x-16 items-center whitespace-nowrap animate-marquee group-hover:[animation-play-state:paused]">
-                <!-- LOGOS (Série 1) -->
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-gem text-gold-600/50 mr-2"></i> KRONOS BANK
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-gavel text-gold-600/50 mr-2"></i> MALHERBE NOTAIRES
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-building text-gold-600/50 mr-2"></i> ARCHI LUXE STUDIO
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-shield-halved text-gold-600/50 mr-2"></i> SÉCURITÉ PRIVÉE ASSOCIES
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-crown text-gold-600/50 mr-2"></i> HERITAGE TRUST
+            <!-- Rail d'animation (de Gauche à Droite) -->
+            <div class="flex space-x-12 md:space-x-20 whitespace-nowrap animate-marquee-reverse group-hover:[animation-play-state:paused]">
+
+                <!-- Série 1 -->
+                <div class="flex items-center space-x-12 md:space-x-20 shrink-0">
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                 </div>
 
-                <!-- LOGOS DUPLIQUÉS (Série 2 pour l'effet de boucle continue parfaite) -->
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-gem text-gold-600/50 mr-2"></i> KRONOS BANK
+                <!-- Série 2 (Dupliquée pour boucle infinie parfaite) -->
+                <div class="flex items-center space-x-12 md:space-x-20 shrink-0" aria-hidden="true">
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                 </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-gavel text-gold-600/50 mr-2"></i> MALHERBE NOTAIRES
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-building text-gold-600/50 mr-2"></i> ARCHI LUXE STUDIO
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-shield-halved text-gold-600/50 mr-2"></i> SÉCURITÉ PRIVÉE ASSOCIES
-                </div>
-                <div
-                    class="flex items-center space-x-3 text-navy-900/40 font-serif text-lg tracking-[0.2em] italic font-medium">
-                    <i class="fa-solid fa-crown text-gold-600/50 mr-2"></i> HERITAGE TRUST
-                </div>
+
             </div>
         </div>
     </section>
