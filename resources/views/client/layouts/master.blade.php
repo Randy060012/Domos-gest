@@ -112,20 +112,20 @@
             }
         }
 
-        @keyframes marquee-reverse {
+        @keyframes marquee-smooth {
             0% {
-                transform: translateX(-50%);
+                transform: translateX(0%);
             }
 
             100% {
-                transform: translateX(0%);
+                transform: translateX(-50%);
             }
         }
 
-        .animate-marquee-reverse {
+        .animate-marquee-smooth {
             display: flex;
             width: max-content;
-            animation: marquee-reverse 25s linear infinite;
+            animation: marquee-smooth 30s linear infinite;
         }
 
         .animate-fade-slide {

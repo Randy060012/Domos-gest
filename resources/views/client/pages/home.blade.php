@@ -20,7 +20,7 @@
 
             <div class="space-y-6">
                 <span class="inline-block uppercase tracking-[0.25em] text-[10px] font-bold text-white border-b border-gold-500/60 pb-2 animate__animated animate__fadeInDown">
-                    L'immobilier Haute Couture
+                    Bien plus qu'une agence immobilière
                 </span>
 
                 <!-- H1 contenant le Slider Horizontal -->
@@ -634,7 +634,7 @@
         </div>
     </section>
 
-    <!-- NOUVELLE SECTION : PARTENAIRES (DÉFILEMENT INFINI) -->
+    <!-- SECTION PARTENAIRES -->
     <section class="bg-[#F9F6F0] py-16 overflow-hidden border-t border-b border-slate-100/40">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-8 text-center">
             <span class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em] block">
@@ -643,23 +643,35 @@
         </div>
 
         <!-- Conteneur du Marquee -->
-        <div class="relative w-full flex items-center overflow-hidden group">
+        <div class="relative w-full overflow-hidden group">
             <!-- Dégradés esthétiques sur les côtés -->
             <div class="absolute left-0 top-0 bottom-0 w-28 bg-gradient-to-r from-[#F9F6F0] to-transparent z-10 pointer-events-none"></div>
             <div class="absolute right-0 top-0 bottom-0 w-28 bg-gradient-to-l from-[#F9F6F0] to-transparent z-10 pointer-events-none"></div>
 
-            <!-- Rail d'animation (de Gauche à Droite) -->
-            <div class="flex space-x-12 md:space-x-20 whitespace-nowrap animate-marquee-reverse group-hover:[animation-play-state:paused]">
+            <!-- Rail d'animation -->
+            <div class="animate-marquee-smooth group-hover:[animation-play-state:paused]">
 
-                <!-- Série 1 -->
-                <div class="flex items-center space-x-12 md:space-x-20 shrink-0">
+                <!-- GROUPE 1 -->
+                <div class="flex items-center gap-12 md:gap-20 pr-12 md:pr-20 shrink-0">
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                 </div>
 
-                <!-- Série 2 (Dupliquée pour boucle infinie parfaite) -->
-                <div class="flex items-center space-x-12 md:space-x-20 shrink-0" aria-hidden="true">
+                <!-- GROUPE 2 (Duplicata exact pour créer la boucle invisible) -->
+                <div class="flex items-center gap-12 md:gap-20 pr-12 md:pr-20 shrink-0" aria-hidden="true">
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                    <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/Fichier 7.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/LogoNom.svg" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
                     <img src="images/LogoWeb.png" alt="Partenaire" class="h-16 md:h-20 w-auto max-w-[200px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
@@ -682,13 +694,15 @@
                 </p>
                 <div class="space-y-3 pt-4 text-xs text-slate-600 font-medium">
                     <p class="flex items-center space-x-3"><i
-                            class="fa-solid fa-phone text-gold-500/80 w-5"></i><span>+33 (0)1 42 68 50 00</span></p>
+                            class="fa-solid fa-phone text-gold-500/80 w-5"></i><span>+228 90 31 95 73</span></p>
                     <p class="flex items-center space-x-3"><i
-                            class="fa-solid fa-envelope text-gold-500/80 w-5"></i><span>contact@luxe-habitat.com</span>
+                            class="fa-solid fa-phone text-gold-500/80 w-5"></i><span>+228 92247107</span></p>
+                    <p class="flex items-center space-x-3"><i
+                            class="fa-solid fa-envelope text-gold-500/80 w-5"></i><span>t.lexglobalcontact@gmail.com</span>
                     </p>
                     <p class="flex items-center space-x-3"><i
-                            class="fa-solid fa-location-dot text-gold-500/80 w-5"></i><span>Place Vendôme, 75001
-                            Paris</span></p>
+                            class="fa-solid fa-location-dot text-gold-500/80 w-5"></i><span>Adidogome-Fransciscain Dérrière la Division OTR Lomé-TOGO
+                        </span></p>
                 </div>
             </div>
 
