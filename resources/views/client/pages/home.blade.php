@@ -99,14 +99,13 @@
                         <span>Rechercher</span>
                     </button>
                 </form> -->
-
                 <form method="GET" action="{{ route('home.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-5 items-end text-left">
                     <!-- Localisation Dynamique -->
                     <div class="space-y-1.5">
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
                             <i class="fa-solid fa-location-dot text-gold-500/70 mr-1.5"></i> Localisation
                         </label>
-                        <select name="localisation" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                        <select id="select-localisation" name="localisation" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
                             <option value="">Toutes les localisations</option>
                             @foreach($localisations as $loc)
                             <option value="{{ $loc }}" {{ request('localisation') == $loc ? 'selected' : '' }}>
@@ -116,20 +115,18 @@
                         </select>
                     </div>
 
-                    <!-- Type de bien -->
+                    <!-- Type de bien chargé dynamiquement -->
                     <div class="space-y-1.5">
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
                             <i class="fa-solid fa-house text-gold-500/70 mr-1.5"></i> Type de bien
                         </label>
-                        <select name="type" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                        <select id="select-type" name="type" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
                             <option value="">Tous types</option>
-                            <option value="Pièces simples" {{ request('type') == 'Pièces simples' ? 'selected' : '' }}>Pièces simples</option>
-                            <option value="Pièces interne" {{ request('type') == 'Pièces interne' ? 'selected' : '' }}>Pièces interne</option>
-                            <option value="Studios" {{ request('type') == 'Studios' ? 'selected' : '' }}>Studios</option>
-                            <option value="Chambres Salon" {{ request('type') == 'Chambres Salon' ? 'selected' : '' }}>Chambres Salon</option>
-                            <option value="Appartement Meublé" {{ request('type') == 'Appartement Meublé' ? 'selected' : '' }}>Appartement Meublé</option>
-                            <option value="Villa" {{ request('type') == 'Villa' ? 'selected' : '' }}>Villa</option>
-                            <option value="Villa Meublé" {{ request('type') == 'Villa Meublé' ? 'selected' : '' }}>Villa Meublé</option>
+                            @foreach($types as $type)
+                            <option value="{{ $type }}" {{ request('type') == $type ? 'selected' : '' }}>
+                                {{ $type }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -785,5 +782,28 @@
 <script>
     const baseUrlDetails = "{{ route('details.home') }}";
     const contactInteretUrl = "{{ route('contact.interet') }}";
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const locSelect = document.getElementById('select-localisation');
+        const typeSelect = document.getElementById('select-type');
+
+        locSelect.addEventListener('change', function() {
+            const selectedLoc = this.value;
+
+            // Requête AJAX pour récupérer les types correspondant à la localisation
+            fetch(`{{ route('biens.get-types') }}?localisation=${encodeURIComponent(selectedLoc)}`)
+                .then(response => response.json())
+                .then(types => {
+                    typeSelect.innerHTML = '<option value="">Tous types</option>';
+                    types.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type;
+                        option.textContent = type;
+                        typeSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Erreur lors du chargement des types:', error));
+        });
+    });
 </script>
 @endsection

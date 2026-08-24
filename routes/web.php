@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Routes publiques (client)
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/get-types-by-location', [HomeController::class, 'getTypesByLocation'])->name('biens.get-types');
 Route::get('/catalogue', [CatalogueController::class, 'index'])->name('liste.index');
 Route::get('/details', [CatalogueController::class, 'details'])->name('details.home');
 Route::get('/demande', [DemandeController::class, 'index'])->name('ask.index');

@@ -31,16 +31,81 @@ class HomeController extends Controller
     //     return view('client.pages.home', compact('biens'));
     // }
 
+    // public function index(Request $request)
+    // {
+    //     // 1. Récupération des localisations uniques
+    //     $localisations = Biens::where('est_actif', true)
+    //         ->whereNotNull('localisation')
+    //         ->pluck('localisation')
+    //         ->unique()
+    //         ->values();
+
+    //     // 2. Récupération des types de biens uniques depuis la BDD
+    //     $types = Biens::where('est_actif', true)
+    //         ->whereNotNull('type')
+    //         ->where('type', '!=', '')
+    //         ->pluck('type')
+    //         ->unique()
+    //         ->values();
+
+    //     // 3. Application des filtres
+    //     $query = Biens::with('images')->where('est_actif', true);
+
+    //     if ($request->filled('localisation')) {
+    //         $query->where('localisation', $request->localisation);
+    //     }
+
+    //     if ($request->filled('type')) {
+    //         $query->where('type', $request->type);
+    //     }
+
+    //     if ($request->filled('budget')) {
+    //         $query->where('prix', '<=', $request->budget);
+    //     }
+
+    //     // 4. Formatage
+    //     $biens = $query->latest()->get()->map(fn($b) => [
+    //         'id'       => $b->id,
+    //         'title'    => $b->titre,
+    //         'price'    => (float) $b->prix,
+    //         'location' => $b->localisation,
+    //         'type'     => $b->type ?? '',
+    //         'status'   => match ($b->statut) {
+    //             'VENTE' => 'Vente',
+    //             'LOCATION' => 'Location',
+    //             default => $b->statut
+    //         },
+    //         'area'     => $b->surface_habitable ?? 0,
+    //         'rooms'    => $b->pieces ?? 0,
+    //         'image'    => ($img = $b->imagePrincipale()) ? Storage::url($img->image_path) : '',
+    //         'desc'     => \Illuminate\Support\Str::limit($b->description ?? '', 120),
+    //         'isRecent' => $b->created_at->diffInDays(now()) < 30,
+    //     ]);
+
+    //     return view('client.pages.home', compact('biens', 'localisations', 'types'));
+    // }
+
     public function index(Request $request)
     {
-        // 1. Récupération des localisations uniques pour le menu déroulant
+        // 1. Récupération de toutes les localisations uniques
         $localisations = Biens::where('est_actif', true)
             ->whereNotNull('localisation')
             ->pluck('localisation')
             ->unique()
             ->values();
 
-        // 2. Construction de la requête filtrée
+        // 2. Récupération des types filtrés selon la localisation courante
+        $typesQuery = Biens::where('est_actif', true)
+            ->whereNotNull('type')
+            ->where('type', '!=', '');
+
+        if ($request->filled('localisation')) {
+            $typesQuery->where('localisation', $request->localisation);
+        }
+
+        $types = $typesQuery->pluck('type')->unique()->values();
+
+        // 3. Application des filtres sur la liste des biens
         $query = Biens::with('images')->where('est_actif', true);
 
         if ($request->filled('localisation')) {
@@ -55,7 +120,7 @@ class HomeController extends Controller
             $query->where('prix', '<=', $request->budget);
         }
 
-        // 3. Formatage des données envoyées à la vue
+        // 4. Formatage
         $biens = $query->latest()->get()->map(fn($b) => [
             'id'       => $b->id,
             'title'    => $b->titre,
@@ -74,7 +139,23 @@ class HomeController extends Controller
             'isRecent' => $b->created_at->diffInDays(now()) < 30,
         ]);
 
-        return view('client.pages.home', compact('biens', 'localisations'));
+        return view('client.pages.home', compact('biens', 'localisations', 'types'));
+    }
+
+    public function getTypesByLocation(Request $request)
+    {
+        $query = Biens::where('est_actif', true)
+            ->whereNotNull('type')
+            ->where('type', '!=', '');
+
+        // Si une localisation est sélectionnée, on filtre les types associés
+        if ($request->filled('localisation')) {
+            $query->where('localisation', $request->localisation);
+        }
+
+        $types = $query->pluck('type')->unique()->values();
+
+        return response()->json($types);
     }
 
     /**
