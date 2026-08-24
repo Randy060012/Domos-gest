@@ -12,15 +12,61 @@ class HomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $biens = Biens::with('images')->where('est_actif', true)->latest()->get()->map(fn($b) => [
+    //         'id'       => $b->id,
+    //         'title'    => $b->titre,
+    //         'price'    => (float) $b->prix,
+    //         'location' => $b->localisation,
+    //         'type'     => $b->type ?? '',
+    //         'status'   => match ($b->statut) { 'VENTE' => 'Vente', 'LOCATION' => 'Location', default => $b->statut },
+    //         'area'     => $b->surface_habitable ?? 0,
+    //         'rooms'    => $b->pieces ?? 0,
+    //         'image'    => ($img = $b->imagePrincipale()) ? Storage::url($img->image_path) : '',
+    //         'desc'     => \Illuminate\Support\Str::limit($b->description ?? '', 120),
+    //         'isRecent' => $b->created_at->diffInDays(now()) < 30,
+    //     ]);
+
+    //     return view('client.pages.home', compact('biens'));
+    // }
+
+    public function index(Request $request)
     {
-        $biens = Biens::with('images')->where('est_actif', true)->latest()->get()->map(fn($b) => [
+        // 1. Récupération des localisations uniques pour le menu déroulant
+        $localisations = Biens::where('est_actif', true)
+            ->whereNotNull('localisation')
+            ->pluck('localisation')
+            ->unique()
+            ->values();
+
+        // 2. Construction de la requête filtrée
+        $query = Biens::with('images')->where('est_actif', true);
+
+        if ($request->filled('localisation')) {
+            $query->where('localisation', $request->localisation);
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->filled('budget')) {
+            $query->where('prix', '<=', $request->budget);
+        }
+
+        // 3. Formatage des données envoyées à la vue
+        $biens = $query->latest()->get()->map(fn($b) => [
             'id'       => $b->id,
             'title'    => $b->titre,
             'price'    => (float) $b->prix,
             'location' => $b->localisation,
             'type'     => $b->type ?? '',
-            'status'   => match ($b->statut) { 'VENTE' => 'Vente', 'LOCATION' => 'Location', default => $b->statut },
+            'status'   => match ($b->statut) {
+                'VENTE' => 'Vente',
+                'LOCATION' => 'Location',
+                default => $b->statut
+            },
             'area'     => $b->surface_habitable ?? 0,
             'rooms'    => $b->pieces ?? 0,
             'image'    => ($img = $b->imagePrincipale()) ? Storage::url($img->image_path) : '',
@@ -28,7 +74,7 @@ class HomeController extends Controller
             'isRecent' => $b->created_at->diffInDays(now()) < 30,
         ]);
 
-        return view('client.pages.home', compact('biens'));
+        return view('client.pages.home', compact('biens', 'localisations'));
     }
 
     /**

@@ -51,7 +51,7 @@
             <!-- FORMULAIRE DE RECHERCHE INTÉGRÉ SANS BORDURES LOURDES -->
             <div
                 class="bg-white p-5 md:p-6 rounded-[32px] shadow-[0_30px_80px_rgba(0,0,0,0.15)] text-slate-900 max-w-4xl mx-auto mt-12 animate__animated animate__zoomIn animate__delay-1s">
-                <form onsubmit="executeSearch(event)"
+                <!-- <form onsubmit="executeSearch(event)"
                     class="grid grid-cols-1 sm:grid-cols-4 gap-5 items-end text-left">
                     <div class="space-y-1.5">
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400"><i
@@ -95,6 +95,61 @@
                     </div>
                     <button type="submit"
                         class="w-full bg-navy-900 text-white font-bold text-[11px] tracking-widest uppercase rounded-xl py-3.5 hover:bg-gold-500 transition-all duration-300 shadow-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+                        <span>Rechercher</span>
+                    </button>
+                </form> -->
+
+                <form method="GET" action="{{ route('home.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-5 items-end text-left">
+                    <!-- Localisation Dynamique -->
+                    <div class="space-y-1.5">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                            <i class="fa-solid fa-location-dot text-gold-500/70 mr-1.5"></i> Localisation
+                        </label>
+                        <select name="localisation" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                            <option value="">Toutes les localisations</option>
+                            @foreach($localisations as $loc)
+                            <option value="{{ $loc }}" {{ request('localisation') == $loc ? 'selected' : '' }}>
+                                {{ $loc }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Type de bien -->
+                    <div class="space-y-1.5">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                            <i class="fa-solid fa-house text-gold-500/70 mr-1.5"></i> Type de bien
+                        </label>
+                        <select name="type" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                            <option value="">Tous types</option>
+                            <option value="Pièces simples" {{ request('type') == 'Pièces simples' ? 'selected' : '' }}>Pièces simples</option>
+                            <option value="Pièces interne" {{ request('type') == 'Pièces interne' ? 'selected' : '' }}>Pièces interne</option>
+                            <option value="Studios" {{ request('type') == 'Studios' ? 'selected' : '' }}>Studios</option>
+                            <option value="Chambres Salon" {{ request('type') == 'Chambres Salon' ? 'selected' : '' }}>Chambres Salon</option>
+                            <option value="Appartement Meublé" {{ request('type') == 'Appartement Meublé' ? 'selected' : '' }}>Appartement Meublé</option>
+                            <option value="Villa" {{ request('type') == 'Villa' ? 'selected' : '' }}>Villa</option>
+                            <option value="Villa Meublé" {{ request('type') == 'Villa Meublé' ? 'selected' : '' }}>Villa Meublé</option>
+                        </select>
+                    </div>
+
+                    <!-- Budget -->
+                    <div class="space-y-1.5">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                            <i class="fa-solid fa-tags text-gold-500/70 mr-1.5"></i> Budget Max
+                        </label>
+                        <select name="budget" class="w-full bg-slate-50/70 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gold-500 transition cursor-pointer">
+                            <option value="">Tous budgets</option>
+                            <option value="35000" {{ request('budget') == '35000' ? 'selected' : '' }}>Jusqu'à 35 000 F CFA</option>
+                            <option value="55000" {{ request('budget') == '55000' ? 'selected' : '' }}>Jusqu'à 55 000 F CFA</option>
+                            <option value="95000" {{ request('budget') == '95000' ? 'selected' : '' }}>Jusqu'à 95 000 F CFA</option>
+                            <option value="200000" {{ request('budget') == '200000' ? 'selected' : '' }}>Jusqu'à 200 000 F CFA</option>
+                            <option value="450000" {{ request('budget') == '450000' ? 'selected' : '' }}>Jusqu'à 450 000 F CFA</option>
+                        </select>
+                    </div>
+
+                    <!-- Bouton -->
+                    <button type="submit" class="w-full bg-navy-900 text-white font-bold text-[11px] tracking-widest uppercase rounded-xl py-3.5 hover:bg-gold-500 transition-all duration-300 shadow-sm flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
                         <span>Rechercher</span>
                     </button>
